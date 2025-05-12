@@ -109,12 +109,15 @@ resource "aws_s3_bucket" "snyk_storage" {
 
 resource "aws_s3_bucket" "my-new-undeployed-bucket" {
   bucket = "snyk-public-${var.environment}-demo"
+  block_public_acls   = true
+  ignore_public_acls  = true
+  
 }
 
 resource "aws_s3_bucket_public_access_block" "snyk_public" {
   bucket = aws_s3_bucket.my-new-undeployed-bucket.id
 
-  block_public_acls   = false
+  block_public_acls   = true
   ignore_public_acls = var.public_ignore_acl
   block_public_policy = var.public_policy_control
 }
